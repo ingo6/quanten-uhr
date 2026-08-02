@@ -14,7 +14,7 @@ h1{font-size:19px;font-weight:650;margin:0 0 2px}#tick{color:var(--mut);font-wei
 .clabel{font-weight:650;font-size:15px;margin-top:6px}.csub{color:var(--mut);font-size:12px;margin-top:2px}
 .pp{text-align:center}.pplab{color:var(--mut);font-size:12px;margin-bottom:4px}
 .ppnum{font-size:22px;font-weight:750;font-variant-numeric:tabular-nums;line-height:1.05}.ppsub{font-size:14px;margin-top:4px}
-.ppduo{display:flex;gap:20px;justify-content:center;align-items:baseline}.ppduo>span{display:flex;flex-direction:column;align-items:center}.ppmini{font-size:10px;text-transform:uppercase;letter-spacing:.5px;margin-top:1px;font-weight:600}
+.ppduo{display:flex;gap:22px;justify-content:center;align-items:flex-start}.ppduo>span{display:flex;flex-direction:column;align-items:center}.ppmini{font-size:10px;text-transform:uppercase;letter-spacing:.5px;margin-top:2px;font-weight:600}.ppsek{font-size:13px;margin-top:1px;font-variant-numeric:tabular-nums}
 table{width:100%;border-collapse:collapse;margin-top:26px;font-family:ui-monospace,monospace;font-size:13px}
 th{color:var(--mut);text-align:left;font-weight:500;font-size:11px;letter-spacing:.6px;text-transform:uppercase;padding:6px 8px;border-bottom:1px solid var(--line)}
 td{padding:6px 8px;border-bottom:1px solid #1a222d;font-variant-numeric:tabular-nums}.good{color:var(--good)}.bad{color:var(--bad)}
@@ -78,7 +78,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--world);outline-offs
   <div class="slede" data-i18nh="slede2">hält das Qubit seinen <b>Takt</b>? · Welle phasenrichtig (Phase)</div>
   <div class="twoclocks"><div class="clock" style="border-color:var(--good)"><svg viewBox="0 0 200 200" width="130" height="130" id="s"></svg>
     <div class="clabel" style="color:var(--good)" data-i18n="clock_s">PHASEN-UHR</div><div class="csub" id="ssub">Quanten-Phase · fließt mit +pp</div></div></div>
-  <div class="pp"><div class="pplab" data-i18n="pplab_p">Quanten-Phase · Sonde D=100 (echt)</div><div class="ppduo"><span><span class="ppnum" id="phaseloss" style="color:#3fb950">–</span><span class="ppmini" style="color:#3fb950" data-i18n="lbl_p">Phase</span></span><span><span class="ppnum" id="schutz" style="color:#ff922b">–</span><span class="ppmini" style="color:#ff922b" data-i18n="lbl_s">Sonde</span></span></div><div class="ppsub" id="schutzsub">–</div></div>
+  <div class="pp"><div class="pplab" data-i18n="pplab_p">Quanten-Phase · Sonde D=100 (echt)</div><div class="ppduo"><span><span class="ppnum" id="phaseloss" style="color:#3fb950">–</span><span class="ppsek" id="phasesek" style="color:#3fb950">–</span><span class="ppmini" style="color:#3fb950" data-i18n="lbl_p">Phase</span></span><span><span class="ppnum" id="schutz" style="color:#ff922b">–</span><span class="ppsek" id="schutzsub" style="color:#ff922b">–</span><span class="ppmini" style="color:#ff922b" data-i18n="lbl_s">Sonde</span></span></div></div>
   <div class="dcol"><span><span class="lab" data-i18n="pdate_l">Phasen-Datum</span><b id="sdate" style="color:#3fb950">–</b></span><span><span class="lab" data-i18n="sdate2_l">Sonde-Datum</span><b id="sdate2" style="color:#ff922b">–</b></span><span><span class="lab" data-i18n="toleranz">Toleranz</span><b id="stol" style="color:var(--good)">–</b></span></div>
   <p class="scale" data-i18n="scale_p">Phasen-Datum läuft vor, solang die Phase hält (+pp) — Minus liefe rückwärts · illustrativ, gleiche Skala wie Quanten</p>
  </section>
@@ -131,6 +131,7 @@ function render(j){if(!j)return;let c=j.pp>=0?'#3fb950':'#f85149';
  if(j.sonde!==undefined){sondePP=j.sonde;let sp=j.sonde,tol=(j.sonde_tol||0);
   let pl=document.getElementById('phaseloss');if(pl){pl.textContent=(sp>=0?'+':'')+sp.toFixed(1)+' pp';}
   let sc=document.getElementById('schutz');sc.textContent=(-sp>=0?'+':'')+(-sp).toFixed(1)+' pp';sc.style.color='#ff922b';
+  let ps=document.getElementById('phasesek');if(ps)ps.textContent='→ '+((sp*0.5)>=0?'+':'')+(sp*0.5).toFixed(1)+' s';
   let ss=document.getElementById('schutzsub');ss.textContent='→ '+(-sp*0.5>=0?'+':'')+(-sp*0.5).toFixed(1)+' s';ss.style.color='#ff922b';
   document.getElementById('ssub').innerHTML=t('legend');
   let stl=document.getElementById('stol');if(stl)stl.textContent='±'+tol.toFixed(1)+' pp';
