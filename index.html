@@ -135,7 +135,7 @@ function render(j){if(!j)return;let c=j.pp>=0?'#3fb950':'#f85149';
   let ss=document.getElementById('schutzsub');ss.textContent='→ '+(-sp*0.5>=0?'+':'')+(-sp*0.5).toFixed(1)+' s';ss.style.color='#ff922b';
   document.getElementById('ssub').innerHTML=t('legend');
   let stl=document.getElementById('stol');if(stl)stl.textContent='±'+tol.toFixed(1)+' pp';
-  let sb=document.getElementById('srows');if(sb&&j.sonde_letzte)sb.innerHTML=j.sonde_letzte.map(r=>`<tr><td>${r[0]}</td><td>${r[1].toFixed(2)}</td><td class="${r[2]>=0?'good':'bad'}">${r[2]>=0?'+':''}${r[2].toFixed(1)}</td><td>±${r[3].toFixed(1)}</td></tr>`).join('');}
+  let sb=document.getElementById('srows');if(sb&&j.sonde_letzte)sb.innerHTML=j.sonde_letzte.map(r=>`<tr><td>${r[0]}</td><td style="color:#ff922b">${r[1].toFixed(2)}</td><td class="${r[2]>=0?'good':'bad'}">${r[2]>=0?'+':''}${r[2].toFixed(1)}</td><td>±${r[3].toFixed(1)}</td></tr>`).join('');}
  let stt=document.getElementById('status');
  let map={online:['● '+t('online'),'#3fb950'],wartung:['● '+t('wartung'),'#e3a008'],offline:['● '+t('offline'),'#f85149']};
  let sk=j.status||'offline',age=j.status_age,det='';
