@@ -128,11 +128,11 @@ function render(j){if(!j)return;let c=j.pp>=0?'#3fb950':'#f85149';
  document.getElementById('qsub').textContent=t('flow')+' '+Math.round(j.phase*100)+'% ('+lg+')';
  let qf=document.getElementById('qfr');if(qf)qf.textContent=Math.round(j.phase*100)+'% ('+lg+')';
  document.getElementById('rows').innerHTML=j.letzte.map(r=>`<tr><td>${r[0]}</td><td>${r[1].toFixed(2)}</td><td class="${r[2]>=0?'good':'bad'}">${r[2]>=0?'+':''}${r[2].toFixed(1)}</td><td class="${r[2]>=0?'good':'bad'}">${(r[2]*0.5>=0?'+':'')}${(r[2]*0.5).toFixed(1)}s</td></tr>`).join('');
- if(j.sonde!==undefined){sondePP=j.sonde;let sp=j.sonde,tol=(j.sonde_tol||0);
+ if(j.sonde!==undefined){sondePP=j.sonde;let sp=j.sonde,tol=(j.sonde_tol||0);let cp=j.code_pp;
   let pl=document.getElementById('phaseloss');if(pl){pl.textContent=(sp>=0?'+':'')+sp.toFixed(1)+' pp';}
-  let sc=document.getElementById('schutz');sc.textContent=(-sp>=0?'+':'')+(-sp).toFixed(1)+' pp';sc.style.color='#ff922b';
+  let sc=document.getElementById('schutz');if(cp!=null){sc.textContent=(cp>=0?'+':'')+cp.toFixed(1)+' pp';}else{sc.textContent='–';}sc.style.color='#ff922b';
   let ps=document.getElementById('phasesek');if(ps)ps.textContent='→ '+((sp*0.5)>=0?'+':'')+(sp*0.5).toFixed(1)+' s';
-  let ss=document.getElementById('schutzsub');ss.textContent='→ '+(-sp*0.5>=0?'+':'')+(-sp*0.5).toFixed(1)+' s';ss.style.color='#ff922b';
+  let ss=document.getElementById('schutzsub');if(cp!=null){ss.textContent='→ '+((cp*0.5)>=0?'+':'')+(cp*0.5).toFixed(1)+' s';}else{ss.textContent='';}ss.style.color='#ff922b';
   document.getElementById('ssub').innerHTML=t('legend');
   let stl=document.getElementById('stol');if(stl)stl.textContent='±'+tol.toFixed(1)+' pp';
   let sb=document.getElementById('srows');if(sb&&j.sonde_letzte)sb.innerHTML=j.sonde_letzte.map(r=>`<tr><td>${r[0]}</td><td style="color:#ff922b">${r[1].toFixed(2)}</td><td class="${r[2]>=0?'good':'bad'}">${r[2]>=0?'+':''}${r[2].toFixed(1)}</td><td>±${r[3].toFixed(1)}</td></tr>`).join('');}
