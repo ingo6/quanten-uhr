@@ -146,12 +146,12 @@ function render(j){if(!j)return;let c=j.pp>=0?'#3fb950':'#f85149';
   let stl=document.getElementById('stol');if(stl)stl.textContent='±'+tol.toFixed(1)+' pp';
   let sb=document.getElementById('srows');if(sb&&j.qubit_letzte)sb.innerHTML=j.qubit_letzte.map(r=>{let col=r[3]=='phase'?'#3fb950':'#ff922b';return `<tr><td>${r[0]}</td><td style="color:${col}">${r[1].toFixed(2)}</td><td class="${r[2]>=0?'good':'bad'}">${r[2]>=0?'+':''}${r[2].toFixed(1)}</td><td style="color:${col};font-weight:700;text-align:center">●</td></tr>`;}).join('');}
  let stt=document.getElementById('status');
- let map={online:['● '+t('online'),'#3fb950'],wartung:['● '+t('wartung'),'#e3a008'],offline:['● '+t('offline'),'#f85149']};
- let sk=j.status||'offline',age=j.status_age,det='';
+ let map={online:['● '+t('online'),'#3fb950'],wartung:['● '+t('wartung'),'#e3a008'],standby:['● '+t('standby'),'#e3a008'],offline:['● '+t('offline'),'#f85149']};
+ let sk=j.status||'standby',age=j.status_age,det='';
  if(sk==='online')det=t('measuring')+(age>=0?' · '+t('last')+' '+age+' min':'');
  else if(sk==='wartung')det=t('maint')+(j.status_grund?' · '+j.status_grund:'');
- else det=t('nofresh')+(age>=0?' · '+age+' min':'');
- try{let ln=j.letzte&&j.letzte[0]&&j.letzte[0][0];if(ln){let dt=new Date(ln.replace(' ','T'));let mins=(Date.now()-dt.getTime())/60000;if(mins>50&&sk!=='wartung'){sk='offline';det=t('stale')+' · '+Math.round(mins)+' min';}}}catch(e){}
+ else det=t('standbydet')+(age>=0?' · '+t('last')+' '+age+' min':'');
+ try{let ln=j.letzte&&j.letzte[0]&&j.letzte[0][0];if(ln){let dt=new Date(ln.replace(' ','T'));let mins=(Date.now()-dt.getTime())/60000;if(mins>50&&sk==='online'){sk='standby';det=t('standbydet')+' · '+t('last')+' '+Math.round(mins)+' min';}}}catch(e){}
  let m=map[sk]||['● ?','#8b95a3'];stt.textContent=m[0]+(det?' · '+det:'');stt.style.color=m[1];stt.style.borderColor=m[1];
  document.getElementById('foot').textContent=(j.n_uhr||0)+' '+t('uhr_meas')+' · '+(j.n_sonde||0)+' '+t('sonde_meas')+' · '+t('foot_model');
  let SA=(id,a)=>{let e=document.getElementById(id);if(!e)return;if(a==null||a<0){e.textContent='';return;}let col=a<=15?'#3fb950':(a<=40?'#e3a008':'#f85149');e.textContent='● '+t('lastmeas')+' '+a+' '+t('min_ago');e.style.color=col;};
